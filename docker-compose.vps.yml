@@ -1,0 +1,124 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: alwrity-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DEPLOY_ENV=production
+      - HOST=0.0.0.0
+      - PORT=8000
+      - RELOAD=false
+      - LOG_LEVEL=INFO
+      - DEBUG=false
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - alwrity_data:/app/data
+      - alwrity_logs:/app/logs
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2'
+        reservations:
+          memory: 2G
+          cpus: '1'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - alwrity-network
+
+  # Optional: PostgreSQL database (if not using SQLite)
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: alwrity-postgres
+  #   restart: unless-stopped
+  #   environment:
+  #     - POSTGRES_DB=alwrity
+  #     - POSTGRES_USER=alwrity
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeme}
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 512M
+  #         cpus: '0.5'
+  #       reservations:
+  #         memory: 256M
+  #         cpus: '0.25'
+  #   networks:
+  #     - alwrity-network
+
+  # Optional: Redis for caching (recommended for production)
+  redis:
+    image: redis:7-alpine
+    container_name: alwrity-redis
+    restart: unless-stopped
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru --appendonly yes
+    volumes:
+      - redis_data:/data
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
+        reservations:
+          memory: 128M
+          cpus: '0.1'
+    networks:
+      - alwrity-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # Optional: Nginx reverse proxy (recommended for production)
+  nginx:
+    image: nginx:alpine
+    container_name: alwrity-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend/build:/usr/share/nginx/html:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - backend
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+        reservations:
+          memory: 64M
+          cpus: '0.1'
+    networks:
+      - alwrity-network
+
+volumes:
+  alwrity_data:
+  alwrity_logs:
+  redis_data:
+  # postgres_data:
+
+networks:
+  alwrity-network:
+    driver: bridge
+
