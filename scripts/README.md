@@ -2,19 +2,19 @@
 
 Koleksi script untuk setup dan deployment ALwrity di Ubuntu VPS.
 
-## 📋 Available Scripts
+##  Available Scripts
 
 ### 1. `ubuntu-setup.sh` - Full System Setup
 **Purpose**: Setup lengkap sistem Ubuntu untuk ALwrity (recommended untuk VPS baru)
 
 **Features**:
-- ✅ System update & upgrade
-- ✅ Install Docker & Docker Compose
-- ✅ Install Python 3.10+ & dependencies
-- ✅ Configure firewall (UFW)
-- ✅ Create ALwrity user (optional)
-- ✅ System optimization untuk 8GB RAM
-- ✅ Install monitoring tools
+-  System update & upgrade
+-  Install Docker & Docker Compose
+-  Install Python 3.10+ & dependencies
+-  Configure firewall (UFW)
+-  Create ALwrity user (optional)
+-  System optimization untuk 8GB RAM
+-  Install monitoring tools
 
 **Usage**:
 ```bash
@@ -29,11 +29,11 @@ sudo bash scripts/ubuntu-setup.sh
 **Purpose**: Deploy ALwrity setelah sistem sudah setup
 
 **Features**:
-- ✅ Check system requirements
-- ✅ Setup environment variables
-- ✅ Build frontend (optional)
-- ✅ Deploy dengan Docker Compose
-- ✅ Health check
+-  Check system requirements
+-  Setup environment variables
+-  Build frontend (optional)
+-  Deploy dengan Docker Compose
+-  Health check
 
 **Usage**:
 ```bash
@@ -52,9 +52,9 @@ bash scripts/deploy-alwrity.sh
 **Purpose**: Setup minimal cepat (Docker + basic tools)
 
 **Features**:
-- ✅ Install Docker & Docker Compose
-- ✅ Install basic tools
-- ✅ Configure firewall
+-  Install Docker & Docker Compose
+-  Install basic tools
+-  Configure firewall
 
 **Usage**:
 ```bash
@@ -102,7 +102,7 @@ scripts/
 
 ---
 
-## 🔧 Script Details
+##  Script Details
 
 ### ubuntu-setup.sh
 
@@ -145,7 +145,7 @@ scripts/
 
 ---
 
-## ⚙️ Configuration
+##  Configuration
 
 ### Environment Variables
 
@@ -165,7 +165,7 @@ Edit scripts untuk customize:
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Script Fails
 
@@ -203,7 +203,7 @@ groups $USER
 
 ---
 
-## 📝 Notes
+##  Notes
 
 1. **Root Access**: Setup scripts require root (use sudo)
 2. **Internet**: Scripts need internet connection
@@ -213,13 +213,13 @@ groups $USER
 
 ---
 
-## 🔒 Security
+##  Security
 
 Scripts include:
-- ✅ Firewall configuration (UFW)
-- ✅ User creation (non-root)
-- ✅ Docker group permissions
-- ✅ System optimization
+-  Firewall configuration (UFW)
+-  User creation (non-root)
+-  Docker group permissions
+-  System optimization
 
 **Important**: 
 - Review scripts before running
@@ -228,7 +228,7 @@ Scripts include:
 
 ---
 
-## 📚 Related Documentation
+##  Related Documentation
 
 - [Ubuntu Setup Guide](../UBUNTU_SETUP_GUIDE.md)
 - [VPS Deployment Guide](../VPS_DEPLOYMENT_GUIDE.md)
@@ -236,7 +236,7 @@ Scripts include:
 
 ---
 
-## ✅ Checklist
+##  Checklist
 
 Before running scripts:
 - [ ] VPS dengan Ubuntu 20.04+ / 22.04 LTS

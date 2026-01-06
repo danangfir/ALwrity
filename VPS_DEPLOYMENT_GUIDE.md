@@ -2,7 +2,7 @@
 
 Panduan lengkap untuk deploy ALwrity di VPS dengan 8GB RAM.
 
-## 📋 Prerequisites
+##  Prerequisites
 
 ### System Requirements
 - **RAM**: 8GB (minimum 4GB, recommended 8GB)
@@ -16,7 +16,7 @@ Panduan lengkap untuk deploy ALwrity di VPS dengan 8GB RAM.
 - Node.js 18+ (untuk frontend build)
 - Git
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Clone Repository
 ```bash
@@ -58,7 +58,7 @@ docker-compose -f docker-compose.vps.yml up -d
 docker-compose -f docker-compose.vps.yml logs -f backend
 ```
 
-## 🔧 Optimasi untuk 8GB RAM
+##  Optimasi untuk 8GB RAM
 
 ### Resource Limits (Sudah dikonfigurasi di docker-compose.vps.yml)
 
@@ -99,7 +99,7 @@ docker-compose -f docker-compose.vps.yml logs -f backend
    - Redis sudah dikonfigurasi dengan maxmemory 256MB
    - LRU eviction policy untuk menghemat memory
 
-## 📊 Monitoring
+##  Monitoring
 
 ### 1. Resource Monitoring Script
 ```bash
@@ -136,7 +136,7 @@ top
 htop
 ```
 
-## ⚠️ Troubleshooting
+##  Troubleshooting
 
 ### Memory Issues
 
@@ -199,7 +199,7 @@ docker volume prune
 find backend/logs -name "*.log" -mtime +7 -delete
 ```
 
-## 🔒 Security Best Practices
+##  Security Best Practices
 
 1. **Firewall Configuration**
    ```bash
@@ -224,7 +224,7 @@ find backend/logs -name "*.log" -mtime +7 -delete
    - Gunakan secrets management
    - Rotate API keys regularly
 
-## 📈 Scaling Tips
+##  Scaling Tips
 
 ### Untuk Traffic Tinggi
 
@@ -261,7 +261,7 @@ find backend/logs -name "*.log" -mtime +7 -delete
    - Optimize queries
    - Regular VACUUM (PostgreSQL)
 
-## 📝 Maintenance
+##  Maintenance
 
 ### Daily
 - Monitor resource usage
@@ -278,7 +278,7 @@ find backend/logs -name "*.log" -mtime +7 -delete
 - Review security patches
 - Optimize database
 
-## 🆘 Support
+##  Support
 
 Jika mengalami masalah:
 
@@ -287,7 +287,7 @@ Jika mengalami masalah:
 3. Monitor resources: `python backend/scripts/monitor_resources.py --once`
 4. Check GitHub Issues: https://github.com/AJaySi/ALwrity/issues
 
-## 📚 Additional Resources
+##  Additional Resources
 
 - [Installation Guide](docs-site/docs/getting-started/installation.md)
 - [Self-Host Setup](docs-site/docs/user-journeys/developers/self-host-setup.md)

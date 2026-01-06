@@ -1,10 +1,10 @@
 # Platform Comparison: Windows RDP vs Linux untuk ALwrity
 
-## 📊 Perbandingan Windows vs Linux untuk VPS 8GB RAM
+##  Perbandingan Windows vs Linux untuk VPS 8GB RAM
 
-### 🐧 **LINUX (Recommended untuk Production)**
+###  **LINUX (Recommended untuk Production)**
 
-#### ✅ Kelebihan Linux:
+####  Kelebihan Linux:
 
 1. **Resource Efficiency**
    - **Memory Usage**: Linux lebih ringan (~500MB-1GB untuk OS)
@@ -35,7 +35,7 @@
    - **Package Management**: apt/yum lebih reliable
    - **Scripting**: Bash scripting lebih powerful
 
-#### ❌ Kekurangan Linux:
+####  Kekurangan Linux:
 
 1. **Learning Curve**: Perlu familiar dengan command line
 2. **GUI**: Tidak ada GUI default (tapi bisa install)
@@ -43,9 +43,9 @@
 
 ---
 
-### 🪟 **WINDOWS RDP**
+###  **WINDOWS RDP**
 
-#### ✅ Kelebihan Windows:
+####  Kelebihan Windows:
 
 1. **User Friendly**
    - **GUI**: Familiar interface untuk Windows users
@@ -61,7 +61,7 @@
    - **Windows Services**: Jika perlu integrasi dengan Windows services
    - **.NET Applications**: Jika ada .NET components
 
-#### ❌ Kekurangan Windows:
+####  Kekurangan Windows:
 
 1. **Resource Heavy**
    - **Memory Usage**: Windows Server ~2-3GB untuk OS
@@ -85,15 +85,13 @@
 
 ---
 
-## 🎯 **REKOMENDASI: LINUX (Ubuntu 22.04 LTS)**
+## **REKOMENDASI: LINUX (Ubuntu 22.04 LTS)**
 
 ### Untuk VPS 8GB RAM, **Linux adalah pilihan terbaik** karena:
 
 1. **Resource Efficiency**
    ```
-   Linux:  ~1GB OS  → 7GB untuk aplikasi ✅
-   Windows: ~3GB OS → 5GB untuk aplikasi ❌
-   ```
+   Linux:  ~1GB OS -> 7GB untuk aplikasi    Windows: ~3GB OS -> 5GB untuk aplikasi    ```
 
 2. **Docker Performance**
    - Linux: Native Docker, lebih cepat
@@ -109,9 +107,9 @@
 
 ---
 
-## 📋 **Setup Guide per Platform**
+##  **Setup Guide per Platform**
 
-### 🐧 Linux Setup (Recommended)
+###  Linux Setup (Recommended)
 
 ```bash
 # 1. Install Docker
@@ -137,9 +135,8 @@ htop
 - Backend: 4GB (limit)
 - Redis: 256MB (limit)
 - Nginx: 128MB (limit)
-- **Total: ~5GB, sisa 3GB buffer** ✅
-
-### 🪟 Windows RDP Setup
+- **Total: ~5GB, sisa 3GB buffer** 
+###  Windows RDP Setup
 
 ```powershell
 # 1. Install Docker Desktop atau WSL2
@@ -160,13 +157,12 @@ Task Manager
 - Backend: 4GB (limit)
 - Redis: 256MB (limit)
 - Nginx: 128MB (limit)
-- **Total: ~7GB, sisa 1GB buffer** ⚠️
-
+- **Total: ~7GB, sisa 1GB buffer** 
 ---
 
-## 🎯 **Kesimpulan & Rekomendasi**
+## **Kesimpulan & Rekomendasi**
 
-### ✅ **Pilih LINUX jika:**
+###  **Pilih LINUX jika:**
 - Production deployment
 - Ingin maximize resource usage
 - Budget terbatas (no license fee)
@@ -174,7 +170,7 @@ Task Manager
 - Familiar dengan command line
 - Perlu Docker performance optimal
 
-### ⚠️ **Pilih WINDOWS jika:**
+###  **Pilih WINDOWS jika:**
 - Development/testing saja
 - Perlu GUI untuk management
 - Familiar dengan Windows tools
@@ -183,7 +179,7 @@ Task Manager
 
 ---
 
-## 📊 **Comparison Table**
+##  **Comparison Table**
 
 | Aspect | Linux (Ubuntu) | Windows Server |
 |--------|----------------|----------------|
@@ -194,23 +190,23 @@ Task Manager
 | **Stability** | Excellent | Good |
 | **Security** | Better | Good |
 | **Ease of Use** | CLI (Learning curve) | GUI (Easy) |
-| **Production Ready** | ✅ Yes | ⚠️ Limited |
-| **Resource Efficiency** | ✅ Excellent | ❌ Heavy |
-| **Monitoring Tools** | ✅ Many | ⚠️ Limited |
-| **Recommended for 8GB** | ✅ **YES** | ❌ **NO** |
+| **Production Ready** |  Yes |  Limited |
+| **Resource Efficiency** |  Excellent |  Heavy |
+| **Monitoring Tools** |  Many |  Limited |
+| **Recommended for 8GB** |  **YES** |  **NO** |
 
 ---
 
-## 🚀 **Final Recommendation**
+##  **Final Recommendation**
 
 ### **Untuk VPS 8GB RAM: Pilih LINUX (Ubuntu 22.04 LTS)**
 
 **Alasan:**
-1. ✅ **Lebih banyak RAM tersedia** (7GB vs 5GB)
-2. ✅ **Docker performance lebih baik**
-3. ✅ **Gratis** (no license)
-4. ✅ **Lebih stabil untuk production**
-5. ✅ **Better resource efficiency**
+1.  **Lebih banyak RAM tersedia** (7GB vs 5GB)
+2.  **Docker performance lebih baik**
+3.  **Gratis** (no license)
+4.  **Lebih stabil untuk production**
+5.  **Better resource efficiency**
 
 **Setup Time:**
 - Linux: ~30 menit (termasuk Docker setup)
@@ -222,7 +218,7 @@ Task Manager
 
 ---
 
-## 📚 **Next Steps**
+##  **Next Steps**
 
 Jika pilih **Linux**:
 1. Lihat: `VPS_DEPLOYMENT_GUIDE.md`
@@ -237,5 +233,4 @@ Jika pilih **Windows**:
 
 ---
 
-**TL;DR: Untuk VPS 8GB RAM, Linux adalah pilihan terbaik untuk production deployment ALwrity.** 🐧✅
-
+**TL;DR: Untuk VPS 8GB RAM, Linux adalah pilihan terbaik untuk production deployment ALwrity.** 

@@ -1,6 +1,6 @@
 # Instruksi Fix Yarn Install - Network Timeout
 
-## 🔧 Solusi Cepat (Manual)
+##  Solusi Cepat (Manual)
 
 Jalankan perintah berikut di terminal (dari folder `frontend`):
 
@@ -37,7 +37,7 @@ rm -rf node_modules yarn.lock package-lock.json
 yarn install
 ```
 
-## 🚀 Quick Fix (Gunakan Script)
+##  Quick Fix (Gunakan Script)
 
 ### Windows (PowerShell):
 ```powershell
@@ -52,7 +52,7 @@ chmod +x fix-yarn-install.sh
 ./fix-yarn-install.sh
 ```
 
-## 📋 Perintah Lengkap (Copy-Paste)
+##  Perintah Lengkap (Copy-Paste)
 
 ### Untuk Windows (Git Bash / PowerShell):
 
@@ -87,7 +87,7 @@ rm -rf node_modules yarn.lock package-lock.json
 yarn install
 ```
 
-## ⚙️ Konfigurasi Yarn yang Disarankan
+##  Konfigurasi Yarn yang Disarankan
 
 Setelah install berhasil, simpan konfigurasi ini:
 
@@ -105,7 +105,7 @@ yarn config set enableProgress false
 yarn config list
 ```
 
-## 🔍 Troubleshooting
+##  Troubleshooting
 
 ### Jika masih timeout:
 
@@ -138,7 +138,7 @@ yarn config list
    ping registry.yarnpkg.com
    ```
 
-## ✅ Verifikasi
+##  Verifikasi
 
 Setelah install berhasil:
 
@@ -153,7 +153,7 @@ yarn list --depth=0
 yarn build
 ```
 
-## 📝 Catatan
+## Catatan
 
 - **Warnings tentang deprecated packages** adalah normal dan bisa diabaikan
 - **Network timeout** biasanya karena koneksi lambat atau tidak stabil

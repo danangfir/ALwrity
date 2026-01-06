@@ -2,7 +2,7 @@
 
 Ringkasan file dan konfigurasi yang sudah dibuat untuk deployment di VPS 8GB RAM.
 
-## ✅ File yang Sudah Dibuat
+##  File yang Sudah Dibuat
 
 ### 1. **Monitoring & Diagnostics**
 - `backend/scripts/monitor_resources.py` - Real-time resource monitoring
@@ -20,7 +20,7 @@ Ringkasan file dan konfigurasi yang sudah dibuat untuk deployment di VPS 8GB RAM
 ### 4. **Dependencies**
 - `backend/requirements.txt` - Updated dengan `psutil` untuk monitoring
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Step 1: Check System
 ```bash
@@ -57,7 +57,7 @@ python backend/scripts/monitor_resources.py --once
 python backend/scripts/monitor_resources.py --interval 60
 ```
 
-## 📊 Resource Allocation (8GB RAM)
+##  Resource Allocation (8GB RAM)
 
 | Service | Memory Limit | CPU Limit | Notes |
 |---------|--------------|-----------|-------|
@@ -67,7 +67,7 @@ python backend/scripts/monitor_resources.py --interval 60
 | **Total Reserved** | **~4.4GB** | **~2.5 cores** | |
 | **Available for OS** | **~3.6GB** | **~1.5 cores** | Buffer space |
 
-## 🔧 Key Optimizations
+##  Key Optimizations
 
 ### 1. Production Optimizer
 - Single worker (1 worker) untuk menghemat memory
@@ -93,7 +93,7 @@ python backend/scripts/monitor_resources.py --interval 60
 - AOF persistence
 - File: `docker-compose.vps.yml`
 
-## 📈 Monitoring Commands
+##  Monitoring Commands
 
 ### Check System Health
 ```bash
@@ -127,7 +127,7 @@ docker-compose -f docker-compose.vps.yml logs -f backend
 docker-compose -f docker-compose.vps.yml ps
 ```
 
-## ⚠️ Important Notes
+##  Important Notes
 
 ### Memory Management
 1. **Video Processing**: MoviePy bisa memakan banyak memory
@@ -156,7 +156,7 @@ docker-compose -f docker-compose.vps.yml ps
    - Database connection pooling
    - HTTP connection pooling (Nginx)
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
 ### High Memory Usage
 ```bash
@@ -190,14 +190,14 @@ docker-compose -f docker-compose.vps.yml exec backend python -c "from services.d
 # Check connection pooling
 ```
 
-## 📚 Documentation
+## Documentation
 
 - **Full Guide**: `VPS_DEPLOYMENT_GUIDE.md`
 - **Scripts Docs**: `backend/scripts/README.md`
 - **Installation**: `docs-site/docs/getting-started/installation.md`
 - **Self-Host**: `docs-site/docs/user-journeys/developers/self-host-setup.md`
 
-## ✅ Checklist Deployment
+##  Checklist Deployment
 
 - [ ] System requirements checked
 - [ ] Environment variables configured
@@ -210,7 +210,7 @@ docker-compose -f docker-compose.vps.yml exec backend python -c "from services.d
 - [ ] Firewall configured
 - [ ] Backups configured
 
-## 🎯 Next Steps
+##  Next Steps
 
 1. **Deploy**: Follow `VPS_DEPLOYMENT_GUIDE.md`
 2. **Monitor**: Setup continuous monitoring
@@ -221,5 +221,4 @@ docker-compose -f docker-compose.vps.yml exec backend python -c "from services.d
 
 **Created**: 2025-01-XX  
 **For**: VPS with 8GB RAM  
-**Status**: Ready for deployment ✅
-
+**Status**: Ready for deployment 

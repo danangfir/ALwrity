@@ -239,3 +239,7 @@ docs/__pycache__/
 .onboarding_progress.json
 *_onboarding_progress.json
 backend/.onboarding_progress*.json
+scripts/README.md
+FORK_AND_PULL_REQUEST_GUIDE.md
+SETUP_FORK_LOCAL.md
+QUICK_FORK_SETUP.md

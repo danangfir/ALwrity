@@ -2,7 +2,7 @@
 
 Koleksi script utilitas untuk deployment dan maintenance ALwrity.
 
-## 📋 Available Scripts
+##  Available Scripts
 
 ### 1. `check_system_requirements.py`
 **Purpose**: Check jika sistem memenuhi requirements minimum untuk ALwrity.
@@ -49,7 +49,7 @@ python scripts/monitor_resources.py --threshold 6144
 
 **Logs**: Disimpan di `logs/resource_monitor.log`
 
-## 🔧 Installation
+##  Installation
 
 Scripts ini memerlukan dependency tambahan:
 ```bash
@@ -61,7 +61,7 @@ Atau install semua requirements:
 pip install -r requirements.txt
 ```
 
-## 📊 Example Usage
+##  Example Usage
 
 ### Pre-deployment Check
 ```bash
@@ -85,7 +85,7 @@ python scripts/check_system_requirements.py
 tail -f logs/resource_monitor.log
 ```
 
-## 🎯 Integration dengan Systemd
+##  Integration dengan Systemd
 
 Anda bisa membuat systemd service untuk monitoring:
 
@@ -105,7 +105,7 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
-## 📝 Notes
+##  Notes
 
 - Scripts ini dirancang untuk VPS dengan 8GB RAM
 - Memory threshold default: 6GB (75% dari 8GB)

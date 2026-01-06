@@ -9,7 +9,7 @@ error Error: https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5
 
 Ini adalah masalah **network timeout** saat download package dari npm registry.
 
-## 🔧 Solusi
+##  Solusi
 
 ### Solusi 1: Gunakan npm dengan timeout lebih lama (Recommended)
 
@@ -85,7 +85,7 @@ npm install --legacy-peer-deps
 npm install --legacy-peer-deps --maxsockets=1 --fetch-retries=5 --fetch-retry-mintimeout=20000
 ```
 
-## 🌐 Registry Mirrors
+##  Registry Mirrors
 
 Jika koneksi ke registry utama lambat, gunakan mirror:
 
@@ -104,7 +104,7 @@ yarn config set registry https://registry.npmmirror.com
 yarn config set registry https://registry.yarnpkg.com
 ```
 
-## 🔍 Diagnostik
+## Diagnostik
 
 ### Check network connectivity
 ```bash
@@ -143,13 +143,13 @@ yarn config get registry
 yarn config get network-timeout
 ```
 
-## ✅ Quick Fix Script
+##  Quick Fix Script
 
 Buat file `fix-install.sh`:
 
 ```bash
 #!/bin/bash
-echo "🔧 Fixing frontend installation..."
+echo " Fixing frontend installation..."
 
 # Remove old files
 echo "Cleaning up..."
@@ -162,13 +162,13 @@ rm -rf node_modules package-lock.json yarn.lock
 echo "Installing dependencies..."
 npm install --legacy-peer-deps --timeout=60000 --maxsockets=1
 
-echo "✅ Done!"
+echo " Done!"
 ```
 
 Atau untuk Windows (PowerShell), buat `fix-install.ps1`:
 
 ```powershell
-Write-Host "🔧 Fixing frontend installation..." -ForegroundColor Cyan
+Write-Host " Fixing frontend installation..." -ForegroundColor Cyan
 
 # Remove old files
 Write-Host "Cleaning up..." -ForegroundColor Yellow
@@ -180,10 +180,10 @@ Remove-Item -Force yarn.lock -ErrorAction SilentlyContinue
 Write-Host "Installing dependencies..." -ForegroundColor Yellow
 npm install --legacy-peer-deps --timeout=60000 --maxsockets=1
 
-Write-Host "✅ Done!" -ForegroundColor Green
+Write-Host " Done!" -ForegroundColor Green
 ```
 
-## 🚀 Recommended Approach untuk VPS
+##  Recommended Approach untuk VPS
 
 Untuk deployment di VPS, gunakan:
 
@@ -198,7 +198,7 @@ npm install --legacy-peer-deps --timeout=120000
 npm run build
 ```
 
-## 📝 Notes
+##  Notes
 
 1. **Warnings tentang deprecated packages** adalah normal untuk `react-scripts@5.0.1`
    - Ini tidak mempengaruhi functionality
@@ -214,7 +214,7 @@ npm run build
 
 4. **Untuk production build**, pastikan semua dependencies terinstall dengan benar sebelum build
 
-## 🆘 Jika Masih Gagal
+##  Jika Masih Gagal
 
 1. **Check internet connection**
    ```bash
@@ -232,4 +232,3 @@ npm run build
    - Install di VPS
 
 5. **Contact support** dengan error log lengkap
-

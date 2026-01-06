@@ -2,7 +2,7 @@
 
 Panduan lengkap setup ALwrity di Ubuntu VPS 8GB RAM.
 
-## 🚀 Quick Start (One Command)
+##  Quick Start (One Command)
 
 ```bash
 # Download dan jalankan setup script
@@ -14,7 +14,7 @@ cd ALwrity
 sudo bash scripts/ubuntu-setup.sh
 ```
 
-## 📋 Manual Setup (Step by Step)
+##  Manual Setup (Step by Step)
 
 ### Step 1: Update System
 
@@ -124,7 +124,7 @@ docker-compose -f docker-compose.vps.yml logs -f backend
 curl http://localhost:8000/health
 ```
 
-## 🔧 Setup Scripts
+## Setup Scripts
 
 ### 1. Full Setup Script
 
@@ -133,13 +133,13 @@ sudo bash scripts/ubuntu-setup.sh
 ```
 
 **Fitur:**
-- ✅ System update
-- ✅ Install Docker & Docker Compose
-- ✅ Install Python & dependencies
-- ✅ Configure firewall
-- ✅ Create ALwrity user
-- ✅ System optimization
-- ✅ Install monitoring tools
+- System update
+- Install Docker & Docker Compose
+- Install Python & dependencies
+- Configure firewall
+- Create ALwrity user
+- System optimization
+- Install monitoring tools
 
 ### 2. Deployment Script
 
@@ -148,11 +148,11 @@ bash scripts/deploy-alwrity.sh
 ```
 
 **Fitur:**
-- ✅ Check system requirements
-- ✅ Setup environment variables
-- ✅ Build frontend (optional)
-- ✅ Deploy with Docker
-- ✅ Health check
+- Check system requirements
+- Setup environment variables
+- Build frontend (optional)
+- Deploy with Docker
+- Health check
 
 ### 3. Quick Setup
 
@@ -161,17 +161,17 @@ sudo bash scripts/ubuntu-quick-setup.sh
 ```
 
 **Fitur:**
-- ✅ Minimal setup (Docker + basic tools)
-- ✅ Fast installation
+- Minimal setup (Docker + basic tools)
+- Fast installation
 
-## 📊 System Requirements Check
+##  System Requirements Check
 
 ```bash
 cd /opt/alwrity/backend
 python3 scripts/check_system_requirements.py
 ```
 
-## 📈 Monitoring
+##  Monitoring
 
 ### Resource Monitoring
 
@@ -204,7 +204,7 @@ iftop
 nethogs
 ```
 
-## 🔒 Security Best Practices
+##  Security Best Practices
 
 ### 1. Firewall Configuration
 
@@ -250,7 +250,7 @@ sudo apt install -y certbot python3-certbot-nginx
 sudo certbot --nginx -d yourdomain.com
 ```
 
-## 🛠️ Troubleshooting
+##  Troubleshooting
 
 ### Docker Issues
 
@@ -301,7 +301,7 @@ sudo ufw status
 curl -I http://localhost:8000/health
 ```
 
-## 📝 Maintenance
+##  Maintenance
 
 ### Daily
 
@@ -339,15 +339,15 @@ docker-compose -f docker-compose.vps.yml up -d --build
 docker-compose -f docker-compose.vps.yml logs --since 30d > monthly-logs.txt
 ```
 
-## 🎯 Next Steps
+##  Next Steps
 
-1. ✅ Setup SSL/TLS dengan Let's Encrypt
-2. ✅ Configure domain name
-3. ✅ Setup monitoring (Prometheus, Grafana)
-4. ✅ Setup backups
-5. ✅ Configure log rotation
+1.  Setup SSL/TLS dengan Let's Encrypt
+2.  Configure domain name
+3.  Setup monitoring (Prometheus, Grafana)
+4.  Setup backups
+5.  Configure log rotation
 
-## 📚 Additional Resources
+##  Additional Resources
 
 - [VPS Deployment Guide](VPS_DEPLOYMENT_GUIDE.md)
 - [Platform Comparison](PLATFORM_COMPARISON.md)
