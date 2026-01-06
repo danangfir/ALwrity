@@ -78,4 +78,7 @@ apscheduler>=3.10.0
 
 # Optional dependencies (for enhanced features)
 redis>=5.0.0
-schedule>=1.2.0 
+schedule>=1.2.0
+
+# Monitoring and system utilities
+psutil>=5.9.0 
