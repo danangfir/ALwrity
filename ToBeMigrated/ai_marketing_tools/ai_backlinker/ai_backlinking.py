@@ -131,13 +131,15 @@
 
 import sys
 # from googlesearch import search  # Temporarily disabled for future enhancement
-from loguru import logger
-from lib.ai_web_researcher.firecrawl_web_crawler import scrape_website
-from lib.gpt_providers.text_generation.main_text_generation import llm_text_gen
-from lib.ai_web_researcher.firecrawl_web_crawler import scrape_url
+import imaplib
+import email
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+from loguru import logger
+from ..ai_web_researcher.firecrawl_web_crawler import scrape_website, scrape_url  # type: ignore[import]
+from backend.services.llm_providers.main_text_generation import llm_text_gen
 
 # Configure logger
 logger.remove()

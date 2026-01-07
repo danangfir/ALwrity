@@ -29,6 +29,7 @@ class APIProvider(enum.Enum):
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
     MISTRAL = "mistral"
+    OPENROUTER = "openrouter"
     TAVILY = "tavily"
     SERPER = "serper"
     METAPHOR = "metaphor"
@@ -80,6 +81,7 @@ class SubscriptionPlan(Base):
     openai_tokens_limit = Column(Integer, default=0)
     anthropic_tokens_limit = Column(Integer, default=0)
     mistral_tokens_limit = Column(Integer, default=0)
+    openrouter_tokens_limit = Column(Integer, default=0)
     
     # Cost Limits (in USD)
     monthly_cost_limit = Column(Float, default=0.0)  # 0 = unlimited
@@ -185,6 +187,7 @@ class UsageSummary(Base):
     openai_calls = Column(Integer, default=0)
     anthropic_calls = Column(Integer, default=0)
     mistral_calls = Column(Integer, default=0)
+    openrouter_calls = Column(Integer, default=0)
     tavily_calls = Column(Integer, default=0)
     serper_calls = Column(Integer, default=0)
     metaphor_calls = Column(Integer, default=0)
@@ -200,12 +203,14 @@ class UsageSummary(Base):
     openai_tokens = Column(Integer, default=0)
     anthropic_tokens = Column(Integer, default=0)
     mistral_tokens = Column(Integer, default=0)
+    openrouter_tokens = Column(Integer, default=0)
     
     # Cost Tracking
     gemini_cost = Column(Float, default=0.0)
     openai_cost = Column(Float, default=0.0)
     anthropic_cost = Column(Float, default=0.0)
     mistral_cost = Column(Float, default=0.0)
+    openrouter_cost = Column(Float, default=0.0)
     tavily_cost = Column(Float, default=0.0)
     serper_cost = Column(Float, default=0.0)
     metaphor_cost = Column(Float, default=0.0)

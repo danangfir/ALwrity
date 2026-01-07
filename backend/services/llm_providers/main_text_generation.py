@@ -14,6 +14,7 @@ from ..onboarding.api_key_manager import APIKeyManager
 
 from .gemini_provider import gemini_text_response, gemini_structured_json_response
 from .huggingface_provider import huggingface_text_response, huggingface_structured_json_response
+from .openrouter_provider import openrouter_text_response, openrouter_structured_json_response
 
 
 def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: Optional[Dict[str, Any]] = None, user_id: str = None) -> str:
@@ -55,6 +56,9 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
         elif env_provider in ['hf_response_api', 'huggingface', 'hf']:
             gpt_provider = "huggingface"
             model = "openai/gpt-oss-120b:groq"
+        elif env_provider in ['openrouter', 'or']:
+            gpt_provider = "openrouter"
+            model = os.getenv('OPENROUTER_MODEL', 'openai/gpt-4-turbo')
         
         # Default blog characteristics
         blog_tone = "Professional"
@@ -71,19 +75,24 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
             available_providers.append("google")
         if api_key_manager.get_api_key("hf_token"):
             available_providers.append("huggingface")
+        if api_key_manager.get_api_key("openrouter"):
+            available_providers.append("openrouter")
         
         # If no environment variable set, auto-detect based on available keys
         if not env_provider:
-            # Prefer Google Gemini if available, otherwise use Hugging Face
+            # Prefer Google Gemini if available, then OpenRouter, then Hugging Face
             if "google" in available_providers:
                 gpt_provider = "google"
                 model = "gemini-2.0-flash-001"
+            elif "openrouter" in available_providers:
+                gpt_provider = "openrouter"
+                model = os.getenv('OPENROUTER_MODEL', 'openai/gpt-4-turbo')
             elif "huggingface" in available_providers:
                 gpt_provider = "huggingface"
                 model = "openai/gpt-oss-120b:groq"
             else:
                 logger.error("[llm_text_gen] No API keys found for supported providers.")
-                raise RuntimeError("No LLM API keys configured. Configure GEMINI_API_KEY or HF_TOKEN to enable AI responses.")
+                raise RuntimeError("No LLM API keys configured. Configure GEMINI_API_KEY, OPENROUTER_API_KEY, or HF_TOKEN to enable AI responses.")
         else:
             # Environment variable was set, validate it's supported
             if gpt_provider not in available_providers:
@@ -91,6 +100,9 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
                 if "google" in available_providers:
                     gpt_provider = "google"
                     model = "gemini-2.0-flash-001"
+                elif "openrouter" in available_providers:
+                    gpt_provider = "openrouter"
+                    model = os.getenv('OPENROUTER_MODEL', 'openai/gpt-4-turbo')
                 elif "huggingface" in available_providers:
                     gpt_provider = "huggingface"
                     model = "openai/gpt-oss-120b:groq"
@@ -102,7 +114,7 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
         # Map provider name to APIProvider enum (define at function scope for usage tracking)
         from models.subscription_models import APIProvider
         provider_enum = None
-        # Store actual provider name for logging (e.g., "huggingface", "gemini")
+        # Store actual provider name for logging (e.g., "huggingface", "gemini", "openrouter")
         actual_provider_name = None
         if gpt_provider == "google":
             provider_enum = APIProvider.GEMINI
@@ -110,6 +122,9 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
         elif gpt_provider == "huggingface":
             provider_enum = APIProvider.MISTRAL  # HuggingFace maps to Mistral enum for usage tracking
             actual_provider_name = "huggingface"  # Keep actual provider name for logs
+        elif gpt_provider == "openrouter":
+            provider_enum = APIProvider.OPENROUTER
+            actual_provider_name = "openrouter"  # Keep actual provider name for logs
         
         if not provider_enum:
             raise RuntimeError(f"Unknown provider {gpt_provider} for subscription checking")
@@ -249,9 +264,28 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
                         top_p=top_p,
                         system_prompt=system_instructions
                     )
+            elif gpt_provider == "openrouter":
+                if json_struct:
+                    response_text = openrouter_structured_json_response(
+                        prompt=prompt,
+                        schema=json_struct,
+                        model=model,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        system_prompt=system_instructions
+                    )
+                else:
+                    response_text = openrouter_text_response(
+                        prompt=prompt,
+                        model=model,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        top_p=top_p,
+                        system_prompt=system_instructions
+                    )
             else:
                 logger.error(f"[llm_text_gen] Unknown provider: {gpt_provider}")
-                raise RuntimeError("Unknown LLM provider. Supported providers: google, huggingface")
+                raise RuntimeError("Unknown LLM provider. Supported providers: google, huggingface, openrouter")
             
             # TRACK USAGE after successful API call
             if response_text:
@@ -303,7 +337,7 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
                             # Record exists - read current values with raw SQL
                             try:
                                 # Validate provider_name to prevent SQL injection (whitelist approach)
-                                valid_providers = ['gemini', 'openai', 'anthropic', 'mistral']
+                                valid_providers = ['gemini', 'openai', 'anthropic', 'mistral', 'openrouter']
                                 if provider_name not in valid_providers:
                                     raise ValueError(f"Invalid provider_name for SQL query: {provider_name}")
                                 
@@ -371,7 +405,7 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
                             # This ensures the ORM object reflects the actual database state before we increment
                             logger.debug(f"[llm_text_gen] 🔄 Existing summary found - syncing with raw SQL values: calls={current_calls_before}, tokens={current_tokens_before}")
                             setattr(summary, f"{provider_name}_calls", current_calls_before)
-                            if provider_enum in [APIProvider.GEMINI, APIProvider.OPENAI, APIProvider.ANTHROPIC, APIProvider.MISTRAL]:
+                            if provider_enum in [APIProvider.GEMINI, APIProvider.OPENAI, APIProvider.ANTHROPIC, APIProvider.MISTRAL, APIProvider.OPENROUTER]:
                                 setattr(summary, f"{provider_name}_tokens", current_tokens_before)
                             logger.debug(f"[llm_text_gen] ✅ Synchronized ORM object: {provider_name}_calls={current_calls_before}, {provider_name}_tokens={current_tokens_before}")
                         
@@ -595,7 +629,7 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
             logger.error(f"[llm_text_gen] Provider {gpt_provider} failed: {str(provider_error)}")
             
             # CIRCUIT BREAKER: Only try ONE fallback to prevent expensive API calls
-            fallback_providers = ["google", "huggingface"]
+            fallback_providers = ["google", "openrouter", "huggingface"]
             fallback_providers = [p for p in fallback_providers if p in available_providers and p != gpt_provider]
             
             if fallback_providers:
@@ -609,6 +643,10 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
                         provider_enum = APIProvider.GEMINI
                         actual_provider_name = "gemini"
                         fallback_model = "gemini-2.0-flash-lite"
+                    elif fallback_provider == "openrouter":
+                        provider_enum = APIProvider.OPENROUTER
+                        actual_provider_name = "openrouter"
+                        fallback_model = os.getenv('OPENROUTER_MODEL', 'openai/gpt-4-turbo')
                     elif fallback_provider == "huggingface":
                         provider_enum = APIProvider.MISTRAL
                         actual_provider_name = "huggingface"
@@ -632,6 +670,25 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
                                 top_p=top_p,
                                 n=n,
                                 max_tokens=max_tokens,
+                                system_prompt=system_instructions
+                            )
+                    elif fallback_provider == "openrouter":
+                        if json_struct:
+                            response_text = openrouter_structured_json_response(
+                                prompt=prompt,
+                                schema=json_struct,
+                                model=fallback_model,
+                                temperature=temperature,
+                                max_tokens=max_tokens,
+                                system_prompt=system_instructions
+                            )
+                        else:
+                            response_text = openrouter_text_response(
+                                prompt=prompt,
+                                model=fallback_model,
+                                temperature=temperature,
+                                max_tokens=max_tokens,
+                                top_p=top_p,
                                 system_prompt=system_instructions
                             )
                     elif fallback_provider == "huggingface":
@@ -687,7 +744,7 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
                                 
                                 try:
                                     # Validate provider_name to prevent SQL injection
-                                    valid_providers = ['gemini', 'openai', 'anthropic', 'mistral']
+                                    valid_providers = ['gemini', 'openai', 'anthropic', 'mistral', 'openrouter']
                                     if provider_name not in valid_providers:
                                         raise ValueError(f"Invalid provider_name for SQL query: {provider_name}")
                                     
@@ -732,7 +789,7 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
                                     # CRITICAL: Update the ORM object with values from raw SQL query
                                     # This ensures the ORM object reflects the actual database state before we increment
                                     setattr(summary, f"{provider_name}_calls", current_calls_before)
-                                    if provider_enum in [APIProvider.GEMINI, APIProvider.OPENAI, APIProvider.ANTHROPIC, APIProvider.MISTRAL]:
+                                    if provider_enum in [APIProvider.GEMINI, APIProvider.OPENAI, APIProvider.ANTHROPIC, APIProvider.MISTRAL, APIProvider.OPENROUTER]:
                                         setattr(summary, f"{provider_name}_tokens", current_tokens_before)
                                     logger.debug(f"[llm_text_gen] Synchronized summary object with raw SQL values (fallback): calls={current_calls_before}, tokens={current_tokens_before}")
                                 
@@ -745,7 +802,7 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
                                 
                                 # Update token usage for LLM providers with safety check
                                 # Use current_tokens_before from raw SQL query (most reliable)
-                                if provider_enum in [APIProvider.GEMINI, APIProvider.OPENAI, APIProvider.ANTHROPIC, APIProvider.MISTRAL]:
+                                if provider_enum in [APIProvider.GEMINI, APIProvider.OPENAI, APIProvider.ANTHROPIC, APIProvider.MISTRAL, APIProvider.OPENROUTER]:
                                     logger.debug(f"[llm_text_gen] Current {provider_name}_tokens from DB (fallback, raw SQL): {current_tokens_before}")
                                     
                                     # SAFETY CHECK: Prevent exceeding token limit even if actual usage exceeds estimate
@@ -877,7 +934,7 @@ def llm_text_gen(prompt: str, system_prompt: Optional[str] = None, json_struct: 
 
 def check_gpt_provider(gpt_provider: str) -> bool:
     """Check if the specified GPT provider is supported."""
-    supported_providers = ["google", "huggingface"]
+    supported_providers = ["google", "huggingface", "openrouter"]
     return gpt_provider in supported_providers
 
 def get_api_key(gpt_provider: str) -> Optional[str]:
@@ -886,7 +943,8 @@ def get_api_key(gpt_provider: str) -> Optional[str]:
         api_key_manager = APIKeyManager()
         provider_mapping = {
             "google": "gemini",
-            "huggingface": "hf_token"
+            "huggingface": "hf_token",
+            "openrouter": "openrouter"
         }
         
         mapped_provider = provider_mapping.get(gpt_provider, gpt_provider)
